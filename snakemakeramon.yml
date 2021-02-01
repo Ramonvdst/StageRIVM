@@ -1,0 +1,8 @@
+name: snakemake
+channels: 
+  - bioconda
+  - conda-forge
+  - anaconda
+  - defaults
+dependencies:
+  - snakemake
