@@ -1,0 +1,12 @@
+#testing snakemake rulemaking
+
+rule clark_classify_snakemake:
+    output: "cla_{monsternr}_report.csv"
+    input:  "cla_{monsternr}_out.csv"
+    shell:  "./clark_classifyall_snakemake.sh {output} {input}" 
+
+rule clark_runall_snakemake:
+    output: "cla_{monsternr}_out.csv"
+    input:  "{monsternr}_R1.fastq"
+    shell:  "./clark_runall_snakemake.sh {output} {input}"
+
