@@ -1,9 +1,0 @@
-name: snakemake_env
-channels: 
-  - bioconda
-  - conda-forge
-  - anaconda
-  - defaults
-dependencies:
-  - snakemake=5.32.0
-  

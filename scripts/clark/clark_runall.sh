@@ -28,7 +28,7 @@ for i in ${inputfile} ; do
 
     #adds file ID to filenames array
     filenames+=(${trimID})
-    sleep 1m #testing if computercluster doesnt like al tasks at once.   
+    #sleep 1m #testing if computercluster doesnt like al tasks at once.   
 done;
 
 #summarylog, dont add options below files used.
