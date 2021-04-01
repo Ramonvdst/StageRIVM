@@ -1,0 +1,8 @@
+name: clark_env
+channels:
+  - bioconda
+  - defaults
+dependencies:
+  - snakemake
+  - clark
+

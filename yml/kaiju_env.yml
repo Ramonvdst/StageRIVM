@@ -1,0 +1,8 @@
+name: kaiju_env
+channels:
+  - bioconda
+  - defaults
+dependencies:
+  - snakemake
+  - kaiju
+
