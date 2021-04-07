@@ -32,12 +32,21 @@ for i in ${inputfile} ; do
 done;
 
 # CLARK always puts out a .csv extention, this resulted in an output with .csv.csv... you cannot remove .csv from the snakemake logic, so this is a fix for that.
+# While loop arguably unnecessary due to '-K' option in bsub command
 while [ ! -f cla_${sampleID}_out.csv.csv ] 
 do
     sleep 2
 done
 
-mv cla_${sampleID}_out.csv.csv cla_${sampleID}_out.csv
+#Changes .csv.csv to .csv extention due to limitation in CLARK
+if [ -f mv cla_${sampleID}_out.csv.csv ]
+then 
+    mv cla_${sampleID}_out.csv.csv cla_${sampleID}_out.csv
+else 
+    echo "Could not find cla_${sampleID}_out'.csv.csv' to convert to cla_${sampleID}_out'.csv'"
+fi
+
+
 
 
 # mv cla_${sampleID}_out.csv.csv cla_${sampleID}_out

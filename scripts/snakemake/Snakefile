@@ -1,5 +1,3 @@
-#testing snakemake rulemaking
-
 #clark rules
 rule clark_classify_snakemake:
     output: "cla_{monsternr}_report.csv"
@@ -19,7 +17,16 @@ rule kraken2_isolateGS_snakemake:
 
 rule kraken2_runall_snakemake:
     output: "kra_{monsternr}_fullreport"
-    input:  "{monsternr}_R1.fastq"
+    input:  "{monsternr}_R1.fastq.gz"
     shell:  "./kraken2_runall_snakemake.sh {input} {output}"
 
 #kaiju rules
+rule kaiju_runall_snakemake:
+    output: "kai_{monsternr}_out"
+    input: "{monsternr}_R1.fastq.gz"
+    shell:  "./kaiju_runall_snakemake.sh {input} {output}"
+
+rule kaiju_classify_snakemake:
+    output: "kai_{monsternr}_genus" , "kai_{monsternr}_species"
+    input:  "kai_{monsternr}_out"
+    shell:  "./kaiju_classifyall_snakemake.sh {input} {output}"
