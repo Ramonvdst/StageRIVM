@@ -10,6 +10,7 @@ inputfile=$1
 outputfile=$2
 
 
+
 #runs Kaiju for all R1 and R2 files in var "inputfile"
 for i in ${inputfile} ; do
     #trims Filename to ID string only, for ID use sampleID var !Hardcoded for inputfile, if input folder changes, change trimID!
@@ -17,11 +18,16 @@ for i in ${inputfile} ; do
     sampleID="${trimID%_out*}"      #removes the rest after the ID so you end up with only the filename's ID
 
 
-    bsub -q bio -o ${outputfolder}bsubsummarylog_${sampleID}.txt -K kaiju2table -t ${nodes} -n ${names} -r ${rank} -o ${outputfile}_${rank} ${i}
-    bsub -q bio -o ${outputfolder}bsubsummarylog_${sampleID}.txt -K kaiju2table -t ${nodes} -n ${names} -r ${rank2} -o ${outputfile}_${rank2} ${i}
+    bsub -q bio -o bsubsummarylog_${sampleID}.txt -K kaiju2table -t ${nodes} -n ${names} -r ${rank} -o kai_${sampleID}_${rank} ${i}
+    bsub -q bio -o bsubsummarylog_${sampleID}.txt -K kaiju2table -t ${nodes} -n ${names} -r ${rank2} -o kai_${sampleID}_${rank2} ${i}
 
     
 done;
 
-# tr '\t' ',' <${outputfile}_${rank}> ${outputfile}_${rank}.csv
-# tr '\t' ',' <${outputfile}_${rank2}> ${outputfile}_${rank2}.csv
+#Converts the bsub output from tab delimited to csv
+tr '\t' ',' <kai_${sampleID}_${rank}> kai_${sampleID}_${rank}.csv
+tr '\t' ',' <kai_${sampleID}_${rank2}> kai_${sampleID}_${rank2}.csv
+
+#removes tab delimited files
+rm kai_${sampleID}_${rank}
+rm kai_${sampleID}_${rank2}

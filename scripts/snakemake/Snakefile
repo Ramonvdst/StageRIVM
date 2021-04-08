@@ -27,6 +27,19 @@ rule kaiju_runall_snakemake:
     shell:  "./kaiju_runall_snakemake.sh {input} {output}"
 
 rule kaiju_classify_snakemake:
-    output: "kai_{monsternr}_genus" , "kai_{monsternr}_species"
+    output: "kai_{monsternr}_genus.csv" , "kai_{monsternr}_species.csv"
     input:  "kai_{monsternr}_out"
     shell:  "./kaiju_classifyall_snakemake.sh {input} {output}"
+
+rule kaiju_combine_snakemake:
+    output: "kai_{monsternr}_report.csv"
+    input:  "kai_{monsternr}_genus.csv" , "kai_{monsternr}_species.csv"
+    params: monsterID = "{monsternr}"
+    shell:  "python kaiju_combine_snakemake.py"  +" "+  "kai_{params.monsterID}_genus.csv"  +" "+  "kai_{params.monsterID}_species.csv"  +" "+  "{params.monsterID}"
+
+#combinetable
+rule combine2table_snakemake:
+    output: "combined_{monsternr}_file.csv"
+    input:  "cla_{monsternr}_report.csv" , "kra_{monsternr}_report.csv" , "kai_{monsternr}_report.csv"
+    params: monsterID = "{monsternr}"
+    shell:  "python combine2table_snakemake.py"  +" "+  "cla_{params.monsterID}_report.csv"  +" "+  "kra_{params.monsterID}_report.csv"  +" "+  "kai_{params.monsterID}_report.csv"  +" "+  "{params.monsterID}"
